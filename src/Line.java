@@ -1,38 +1,43 @@
-import com.sun.tools.javac.util.Pair;
-
 public class Line {
-    private Pair<Double, Double> startPoint;
-    private Pair<Double, Double> endPoint;
+    private Point startPoint;
+    private Point endPoint;
 
-    public Line(Pair startPoint, Pair endPoint) {
+    public Line(Point startPoint, Point endPoint) {
         this.startPoint = startPoint;
         this.endPoint = endPoint;
     }
 
     public double cartesianLength() {
 
-        double xPointSquareDifference = Math.pow(this.startPoint.fst - this.endPoint.snd, 2);
-
-        double yPointSquareDifference = Math.pow(this.startPoint.fst - this.endPoint.snd, 2);
-
-        return Math.sqrt(xPointSquareDifference + yPointSquareDifference);
+        return startPoint.findDistance(endPoint);
     }
-
 
     @Override
-    public boolean equals(Object obj) {
-        Line line = (Line) obj;
-        if (startPoint.equals(line.startPoint)) {
-            if (endPoint.equals(line.endPoint))
-                return true;
-        }
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-        if (startPoint.equals(line.endPoint)) {
-            if (endPoint.equals(line.startPoint))
-                return true;
-        }
-        return false;
+        Line line = (Line) o;
+
+        return startPoint.equals(line.startPoint) && endPoint.equals(line.endPoint) ||
+                startPoint.equals(line.endPoint) && endPoint.equals(line.startPoint);
+
     }
+
+    @Override
+    public int hashCode() {
+        int result = startPoint != null ? startPoint.hashCode() : 0;
+        result = 31 * result + (endPoint != null ? endPoint.hashCode() : 0);
+        return result;
+    }
+
+//    @Override
+//    public boolean equals(Object obj) {
+//        Line line = (Line) obj;
+//        return startPoint.equals(line.startPoint) && endPoint.equals(line.endPoint) ||
+//                startPoint.equals(line.endPoint) && endPoint.equals(line.startPoint);
+//
+//    }
 
 
 }
